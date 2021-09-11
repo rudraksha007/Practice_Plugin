@@ -70,9 +70,10 @@ public class ArenaManager {
     }
 
     public void setupArenas() {
-        try {Lobby = loadLocation("lobby");}catch (NullPointerException e){
+        try {Lobby = loadLocation("lobby");
+            }catch (NullPointerException e){
             Bukkit.getLogger().log(Level.SEVERE, "No registered Lobby found. Please register ASAP as no games will run further"); return;}
-
+        if (Lobby==null){Bukkit.getLogger().log(Level.SEVERE, "No registered Lobby found. Please register ASAP as no games will run further");return; }
         try {for (String s: config.getConfigurationSection("maps.mlg").getKeys(false)){
                 MLGArena arena = loadMLGArena(s);
                 if (arena==null)continue;
