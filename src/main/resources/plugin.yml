@@ -1,0 +1,14 @@
+name: Practice
+version: 1.5.5
+main: me.rudraksha007.Practice
+api-version: 1.13
+commands:
+  pa:
+    usage: /pa [addmap|setlooby]
+    description: command for all operation that should be done by admin/operators
+  practice:
+    usage: /practice
+    description: quick joins a MLG game
+softdepend:
+  - PlaceholderAPI
+
