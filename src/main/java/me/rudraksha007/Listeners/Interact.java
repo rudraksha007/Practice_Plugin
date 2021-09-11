@@ -6,6 +6,7 @@ import me.rudraksha007.Objects.Arena;
 import me.rudraksha007.Objects.GUIs.GUIs;
 import me.rudraksha007.Objects.GUIs.MLGOptions;
 import me.rudraksha007.Objects.MLGArena;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -16,6 +17,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.logging.Level;
 
 import static me.rudraksha007.Objects.HashMaps.admin;
 import static me.rudraksha007.Objects.HashMaps.igp;
@@ -28,9 +31,10 @@ public class Interact implements Listener {
     public void onInvClick(InventoryClickEvent event){
         if (event.getClickedInventory()==null)return;
         if (event.getCurrentItem()==null)return;
-        if (!(event.getClickedInventory() instanceof GUIs))return;
+        if (!(event.getClickedInventory().getHolder() instanceof GUIs))return;
         if (!(event.getWhoClicked() instanceof Player))return;
         Player player = (Player) event.getWhoClicked();
+        if (!igp.containsKey(player.getUniqueId()))return;
         event.setCancelled(true);
         if (event.getClickedInventory().getHolder() instanceof MLGOptions){
             MLGArena arena = (MLGArena) igp.get(player.getUniqueId());
@@ -47,7 +51,6 @@ public class Interact implements Listener {
                 }
             }
             else if(stack.getType().equals(Material.GOLD_BLOCK)) {
-                Location loc = arena.getEnd();
                 switch (stack.getAmount()) {
                     case 1:manager.createPlatform(arena, 2, arena.getHeight());break;
                     case 2:manager.createPlatform(arena, 1, arena.getHeight());break;
@@ -95,7 +98,7 @@ public class Interact implements Listener {
         }
 
 
-        if(event.getItem().getType().equals(Material.COMPASS)) {
+        else if(event.getItem().getType().equals(Material.COMPASS)) {
             Player player = event.getPlayer();
             if(!igp.containsKey(player.getUniqueId()))return;
             player.openInventory(new MLGOptions().getInventory());

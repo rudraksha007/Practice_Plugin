@@ -46,6 +46,7 @@ public class MLGArena extends Arena{
     public void setHeight(int height) {
         this.height = height;
     }
+
     public int getScore() {
         return scores;
     }

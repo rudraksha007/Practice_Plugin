@@ -19,11 +19,11 @@ public class ArenaManager {
     FileConfiguration config = Practice.plugin.getConfig();
 
     public void save(Location loc, String path){
-        double x = loc.getX();
-        double y = loc.getY();
-        double z = loc.getZ();
+        double x = loc.getBlockX();
+        double y = loc.getBlockY();
+        double z = loc.getBlockZ();
         World world = loc.getWorld();
-        String val = x+":"+y+":"+z+":"+world;
+        String val = x+":"+y+":"+z+":"+world.getName();
         config.set(path, val);
         Practice.plugin.saveConfig();
     }
@@ -63,7 +63,7 @@ public class ArenaManager {
 
     public MLGArena loadMLGArena(String path){
         if (config.getString(path+".spawn")==null||
-                config.getString(path+".end")==null)return null;
+                config.getString(path+".end")==null){return null;}
         Location location = loadLocation(path+".end");
         Location location1 = loadLocation(path+".spawn");
         return new MLGArena(null, location1, location, null, Material.WATER_BUCKET, 0, 0, 0, 0);
@@ -74,9 +74,10 @@ public class ArenaManager {
             }catch (NullPointerException e){
             Bukkit.getLogger().log(Level.SEVERE, "No registered Lobby found. Please register ASAP as no games will run further"); return;}
         if (Lobby==null){Bukkit.getLogger().log(Level.SEVERE, "No registered Lobby found. Please register ASAP as no games will run further");return; }
-        try {for (String s: config.getConfigurationSection("maps.mlg").getKeys(false)){
-                MLGArena arena = loadMLGArena(s);
+        try {for (String s: config.getConfigurationSection("arenas.mlg").getKeys(false)){
+            MLGArena arena= loadMLGArena("arenas.mlg."+s);
                 if (arena==null)continue;
+                Bukkit.getLogger().log(Level.INFO, "Registered one of the arenas!");
                 MLGArenas.add(arena);}
         }catch (NullPointerException e){Bukkit.getLogger().log(Level.SEVERE, "No registered arenas for MLG found, please register ASAP");}
 

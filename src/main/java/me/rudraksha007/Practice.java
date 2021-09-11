@@ -4,10 +4,7 @@ import me.rudraksha007.Commands.Admin.Admin;
 import me.rudraksha007.Commands.Player.PracticeCommand;
 import me.rudraksha007.Java.ArenaManager;
 import me.rudraksha007.Java.MLGGameManager;
-import me.rudraksha007.Listeners.Damage;
-import me.rudraksha007.Listeners.Interact;
-import me.rudraksha007.Listeners.Move;
-import me.rudraksha007.Listeners.Quit;
+import me.rudraksha007.Listeners.*;
 import me.rudraksha007.Objects.MLGArena;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -37,6 +34,7 @@ public final class Practice extends JavaPlugin {
         for (UUID id: igp.keySet()){
             new MLGGameManager().endMLG((MLGArena) igp.get(id));
         }
+        this.saveConfig();
     }
 
     public void setupCommands(){
@@ -49,5 +47,6 @@ public final class Practice extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new Interact(), this);
         this.getServer().getPluginManager().registerEvents(new Move(), this);
         this.getServer().getPluginManager().registerEvents(new Quit(), this);
+        this.getServer().getPluginManager().registerEvents(new Place(), this);
     }
 }

@@ -7,12 +7,10 @@ import me.rudraksha007.Practice;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -23,7 +21,7 @@ import java.util.UUID;
 public class MLGGameManager {
 
     public Map<UUID, Arena> igp = HashMaps.igp;
-    public Map<UUID, Inventory>invs = HashMaps.invs;
+    public Map<UUID, ItemStack[]> invs = HashMaps.invs;
     public Set<MLGArena> MLGArenas = HashMaps.MLGArenas;
     FileConfiguration config = Practice.plugin.getConfig();
 
@@ -58,12 +56,13 @@ public class MLGGameManager {
     public void endMLG(MLGArena arena){
         Player player = arena.getPlayer();
         player.teleport(HashMaps.Lobby);
-        player.sendMessage(form("&f&l<<<------------------------------------------------>>>"));
+        player.sendMessage(form("&f&l<<<---------------------------------------->>>"));
         player.sendMessage(form(   "&a&lThe game you were in, just ended"));
         player.sendMessage(form("&a&lA total of "+"&a&lA total of "+arena.getScore()+" was added to your account"));
-        player.sendMessage(form("&f&l<<<------------------------------------------------>>>"));
+        player.sendMessage(form("&f&l<<<---------------------------------------->>>"));
         player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue());
-        player.getInventory().setContents(invs.get(player.getUniqueId()).getContents());
+        player.getInventory().clear();
+        player.getInventory().setContents(invs.get(player.getUniqueId()));
         player.updateInventory();
 //TODO catch null pointers while getting all stored scores and values!/////////////////////////////////////////////////////////
         try { int score = config.getInt("player-data."+player.getUniqueId()+".total-score")+ arena.getScore();
@@ -85,11 +84,12 @@ public class MLGGameManager {
         Location loc = arena.getEnd();
         for (int i = -2; i!=3; i++){
             for (int j=-2; j!=3;j++){
-                loc.getWorld().getBlockAt(loc.getBlockX()+i, loc.getBlockY()+arena.getHeight(), loc.getBlockZ()).setType(Material.AIR);
+                loc.getWorld().getBlockAt(loc.getBlockX()+i, loc.getBlockY()+arena.getHeight(), loc.getBlockZ()+j).setType(Material.AIR);
             }
         }
         igp.remove(player.getUniqueId());
         MLGArenas.add(arena.getDefault());
+        Practice.plugin.saveConfig();
     }
 
     public void resetMLG(Player player){
@@ -104,7 +104,7 @@ public class MLGGameManager {
     }
 
     public void saveInventory(Player player){
-        invs.put(player.getUniqueId(), player.getInventory());
+        invs.put(player.getUniqueId(), player.getInventory().getContents());
         player.getInventory().clear();
 
     }
@@ -147,7 +147,7 @@ public class MLGGameManager {
         }else {
             for (int i =-2; i!=3; i++){
                 for (int j = -2; j!=3; j++){
-                    if (i==0||j==0){
+                    if (i==0&&j==0){
                         loc.getWorld().getBlockAt(loc.getBlockX()+i, loc.getBlockY()+arena.getHeight(), loc.getBlockZ()+j).setType(Material.AIR);
                         loc.getWorld().getBlockAt(loc.getBlockX() + i, loc.getBlockY() + height, loc.getBlockZ() + j).setType(Material.GOLD_BLOCK);
                     }else {

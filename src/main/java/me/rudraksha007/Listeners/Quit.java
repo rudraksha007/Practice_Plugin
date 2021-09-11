@@ -2,7 +2,6 @@ package me.rudraksha007.Listeners;
 
 import me.rudraksha007.Objects.MLGArena;
 import me.rudraksha007.Practice;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
@@ -20,11 +19,14 @@ public class Quit implements Listener {
 
     @EventHandler
     public void onQuit(PlayerQuitEvent event){
+        if (igp.isEmpty())return;
+        if (!igp.containsKey(event.getPlayer().getUniqueId()))return;
         Player player = event.getPlayer();
         MLGArena arena = (MLGArena) igp.get(player.getUniqueId());
         player.teleport(Lobby);
         player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue());
-        player.getInventory().setContents(invs.get(player.getUniqueId()).getContents());
+        player.getInventory().clear();
+        player.getInventory().setContents(invs.get(player.getUniqueId()));
         player.updateInventory();
 //TODO catch null pointers while getting all stored scores and values!/////////////////////////////////////////////////////////
         try { int score = config.getInt("player-data."+player.getUniqueId()+".total-score")+ arena.getScore();
@@ -53,7 +55,4 @@ public class Quit implements Listener {
         MLGArenas.add(arena.getDefault());
     }
 
-    public String form(String msg) {
-        return ChatColor.translateAlternateColorCodes('&', msg);
-    }
 }

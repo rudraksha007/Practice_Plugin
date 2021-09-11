@@ -29,9 +29,9 @@ public class Move implements Listener {
                     player.sendMessage(form("&c&lYou failed in this try, resetting for you!"));
                     arena.setFails(arena.getFails()+1);
                 }else {
-                    player.sendMessage(form("&c&lYou succeeded in this try!! resetting for you!"));
-                    int score = arena.getScore();
-                    arena.setScore(score+(-1*arena.getHeight()/2));
+                    player.sendMessage(form("&a&lYou succeeded in this try!! resetting for you!"));
+                    int val = (int) ((-0.5* arena.getHeight())+30);
+                    arena.setScore(arena.getScore()+val);
                     arena.setWins(arena.getWins()+1);
                 }
                 new MLGGameManager().resetMLG(player);
