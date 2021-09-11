@@ -57,10 +57,14 @@ public class Interact implements Listener {
                     case 3:manager.createPlatform(arena, 0, arena.getHeight());break;
                 }
             }
+            Material boat = Material.matchMaterial("BOAT");
+            if (boat==null)boat = Material.matchMaterial("OAK_BOAT");
+            Material web = Material.matchMaterial("WEB");
+            if (web==null)web = Material.matchMaterial("COBWEB");
             else if(stack.getType().equals(Material.WATER_BUCKET)) {arena.setMLGType(Material.WATER_BUCKET);}
             else if(stack.getType().equals(Material.LADDER)) {arena.setMLGType(Material.LADDER);}
-            else if(stack.getType().equals(Material.OAK_BOAT)) {arena.setMLGType(Material.OAK_BOAT);}
-            else if(stack.getType().equals(Material.COBWEB)) {arena.setMLGType(Material.COBWEB);}
+            else if(stack.getType().equals(boat)) {arena.setMLGType(boat);}
+            else if(stack.getType().equals(web)) {arena.setMLGType(web);}
             manager.giveMLGItems(arena);
             igp.put(player.getUniqueId(), arena);
         }

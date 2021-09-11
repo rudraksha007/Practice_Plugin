@@ -7,7 +7,6 @@ import me.rudraksha007.Practice;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.attribute.Attribute;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -60,7 +59,7 @@ public class MLGGameManager {
         player.sendMessage(form(   "&a&lThe game you were in, just ended"));
         player.sendMessage(form("&a&lA total of "+"&a&lA total of "+arena.getScore()+" was added to your account"));
         player.sendMessage(form("&f&l<<<---------------------------------------->>>"));
-        player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue());
+        player.setHealth(player.getMaxHealth());
         player.getInventory().clear();
         player.getInventory().setContents(invs.get(player.getUniqueId()));
         player.updateInventory();
@@ -99,7 +98,7 @@ public class MLGGameManager {
             for (Location loc : arena.getBlocks()){player.getWorld().getBlockAt(loc).setType(Material.AIR);}}
         arena.setBlocks(null);
         giveMLGItems(arena);
-        player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue());
+        player.setHealth(player.getMaxHealth());
         igp.put(player.getUniqueId(), arena);
     }
 

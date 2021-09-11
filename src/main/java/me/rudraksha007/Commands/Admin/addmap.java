@@ -20,7 +20,7 @@ public class addmap {
         meta.setDisplayName(form("&a&lEnd Point Selector (Practice Plugin)"));
         meta.addEnchant(Enchantment.DURABILITY, 3, true);
         stack.setItemMeta(meta);
-        player.getInventory().setItemInMainHand(stack);
+        player.setItemInHand(stack);
         player.sendMessage(form("&a&lSelect normal end point of this map!"));
 
     }

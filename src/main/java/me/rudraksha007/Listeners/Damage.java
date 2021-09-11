@@ -1,6 +1,5 @@
 package me.rudraksha007.Listeners;
 
-import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -17,6 +16,6 @@ public class Damage implements Listener {
         if (!event.getCause().equals(EntityDamageEvent.DamageCause.FALL))return;
         event.setCancelled(true);
         Player player = (Player) event.getEntity();
-        player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue()/2);
+        player.setHealth(player.getMaxHealth()/2);
     }
 }

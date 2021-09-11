@@ -4,7 +4,6 @@ import me.rudraksha007.Objects.MLGArena;
 import me.rudraksha007.Practice;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.attribute.Attribute;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -24,7 +23,7 @@ public class Quit implements Listener {
         Player player = event.getPlayer();
         MLGArena arena = (MLGArena) igp.get(player.getUniqueId());
         player.teleport(Lobby);
-        player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue());
+        player.setHealth(player.getMaxHealth());
         player.getInventory().clear();
         player.getInventory().setContents(invs.get(player.getUniqueId()));
         player.updateInventory();

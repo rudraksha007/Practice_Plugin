@@ -6,7 +6,6 @@ import me.rudraksha007.Practice;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -25,7 +24,7 @@ public class Move implements Listener {
             @Override
             public void run() {
                 MLGArena arena = (MLGArena) igp.get(player.getUniqueId());
-                if (player.getHealth()<player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue()){
+                if (player.getHealth()<player.getMaxHealth()){
                     player.sendMessage(form("&c&lYou failed in this try, resetting for you!"));
                     arena.setFails(arena.getFails()+1);
                 }else {
