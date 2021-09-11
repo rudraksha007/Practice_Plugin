@@ -11,6 +11,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 
 import java.util.logging.Level;
 
+import static me.rudraksha007.Objects.HashMaps.Lobby;
 import static me.rudraksha007.Objects.HashMaps.MLGArenas;
 
 public class ArenaManager {
@@ -69,14 +70,14 @@ public class ArenaManager {
     }
 
     public void setupArenas() {
-        try {
-            for (String s: config.getConfigurationSection("maps.mlg").getKeys(false)){
+        try {Lobby = loadLocation("lobby");}catch (NullPointerException e){
+            Bukkit.getLogger().log(Level.SEVERE, "No registered Lobby found. Please register ASAP as no games will run further"); return;}
+
+        try {for (String s: config.getConfigurationSection("maps.mlg").getKeys(false)){
                 MLGArena arena = loadMLGArena(s);
                 if (arena==null)continue;
-                MLGArenas.add(arena);
-            }
-        }catch (NullPointerException e){
-            Bukkit.getLogger().log(Level.SEVERE, "No registered arenas for MLG found, please register ASAP");
-        }
+                MLGArenas.add(arena);}
+        }catch (NullPointerException e){Bukkit.getLogger().log(Level.SEVERE, "No registered arenas for MLG found, please register ASAP");}
+
     }
 }
