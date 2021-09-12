@@ -9,6 +9,9 @@ commands:
   practice:
     usage: /practice
     description: quick joins a MLG game
+  prleave:
+    usage: /prleave
+    description: command for players to leave practice match
 softdepend:
   - PlaceholderAPI
 

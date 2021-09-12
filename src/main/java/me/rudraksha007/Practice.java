@@ -2,6 +2,7 @@ package me.rudraksha007;
 
 import me.rudraksha007.Commands.Admin.Admin;
 import me.rudraksha007.Commands.Player.PracticeCommand;
+import me.rudraksha007.Commands.Player.leave;
 import me.rudraksha007.Java.ArenaManager;
 import me.rudraksha007.Java.MLGGameManager;
 import me.rudraksha007.Listeners.*;
@@ -40,6 +41,7 @@ public final class Practice extends JavaPlugin {
     public void setupCommands(){
         this.getCommand("practice").setExecutor(new PracticeCommand());
         this.getCommand("pa").setExecutor(new Admin());
+        this.getCommand("prleave").setExecutor(new leave());
     }
 
     public void setupListeners(){
