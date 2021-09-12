@@ -32,8 +32,10 @@ public final class Practice extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        for (UUID id: igp.keySet()){
-            new MLGGameManager().endMLG((MLGArena) igp.get(id));
+        if (!igp.isEmpty()){
+            for (UUID id: igp.keySet()){
+                new MLGGameManager().endMLG((MLGArena) igp.get(id));
+            }
         }
         this.saveConfig();
     }

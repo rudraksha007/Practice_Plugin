@@ -25,13 +25,13 @@ public class MLGGameManager {
     FileConfiguration config = Practice.plugin.getConfig();
 
     public void quickJoinMLG(Player player){
-        if (igp.containsKey(player.getUniqueId())){player.sendMessage(form("&c&lYou are already in a game!"));return;}
         if (MLGArenas.isEmpty()){player.sendMessage(form("&c&lNo games are available right now!"));return;}
+        if (igp.containsKey(player.getUniqueId())){player.sendMessage(form("&c&lYou are already in a game!"));return;}
         for (MLGArena a: MLGArenas){
             startMLG(a, player);
             break;
         }
-        int games = 0;
+        int games;
         try {
             games = config.getInt("player-data."+player.getUniqueId()+".total-games");
             config.set("player-data."+player.getUniqueId()+".total-games", games+ 1);

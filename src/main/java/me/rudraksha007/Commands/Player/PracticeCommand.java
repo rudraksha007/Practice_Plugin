@@ -17,7 +17,7 @@ public class PracticeCommand implements CommandExecutor {
         Player player = (Player) sender;
         if (!player.hasPermission("practice.go")){
             player.sendMessage(form("&c&lYou don't have permission to do this!"));return true;}
-        if (args.length==0)new MLGGameManager().quickJoinMLG(player);
+        if (args.length==0){new MLGGameManager().quickJoinMLG(player);return  true;}
         if (args.length>1){ player.sendMessage(form("&c&lInvalid command. Usage: /practice [join|leave]"));return true;}
         switch (args[0]){
             case "join":new MLGGameManager().quickJoinMLG(player);break;
