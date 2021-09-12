@@ -61,15 +61,23 @@ public class MLGOptions extends GUIs implements InventoryHolder {
         t2.setItemMeta(t2m);
         inv.setItem(13, t2);
 
-        ItemStack t3 = new ItemStack(Material.matchMaterial("WEB"));
-        if (t3==null){ t3 = new ItemStack(Material.matchMaterial("WEB"));}
+        ItemStack t3;
+        try {
+            t3 =  new ItemStack(Material.matchMaterial("COBWEB"));
+        }catch (NullPointerException e){
+            t3 = new ItemStack(Material.matchMaterial("WEB"));
+        }
         ItemMeta t3m = t3.getItemMeta();
         t3m.setDisplayName(ChatColor.GOLD+"Cobweb MLG");
         t3.setItemMeta(t3m);
         inv.setItem(22, t3);
 
-        ItemStack t5 = new ItemStack(Material.matchMaterial("OAK_BOAT"));
-        if (t5==null)t5 = new ItemStack(Material.matchMaterial("BOAT"));
+        ItemStack t5;
+        try {
+            t5 = new ItemStack(Material.matchMaterial("OAK_BOAT"));
+        }catch (NullPointerException e){
+            t5 = new ItemStack(Material.matchMaterial("BOAT"));
+        }
         ItemMeta t5m = t5.getItemMeta();
         t5m.setDisplayName(ChatColor.GOLD+"Boat MLG");
         t5.setItemMeta(t5m);
