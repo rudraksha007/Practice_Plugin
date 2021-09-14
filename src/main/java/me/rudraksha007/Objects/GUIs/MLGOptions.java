@@ -8,7 +8,11 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import static me.rudraksha007.Practice.boat;
+import static me.rudraksha007.Practice.web;
+
 public class MLGOptions extends GUIs implements InventoryHolder {
+
     @Override
     public Inventory getInventory() {
 
@@ -61,27 +65,15 @@ public class MLGOptions extends GUIs implements InventoryHolder {
         t2.setItemMeta(t2m);
         inv.setItem(13, t2);
 
-        ItemStack t3;
-        try {
-            t3 =  new ItemStack(Material.matchMaterial("COBWEB"));
-        }catch (NullPointerException e){
-            t3 = new ItemStack(Material.matchMaterial("WEB"));
-        }
-        ItemMeta t3m = t3.getItemMeta();
+        ItemMeta t3m = web.getItemMeta();
         t3m.setDisplayName(ChatColor.GOLD+"Cobweb MLG");
-        t3.setItemMeta(t3m);
-        inv.setItem(22, t3);
+        web.setItemMeta(t3m);
+        inv.setItem(22, web);
 
-        ItemStack t5;
-        try {
-            t5 = new ItemStack(Material.matchMaterial("OAK_BOAT"));
-        }catch (NullPointerException e){
-            t5 = new ItemStack(Material.matchMaterial("BOAT"));
-        }
-        ItemMeta t5m = t5.getItemMeta();
+        ItemMeta t5m = boat.getItemMeta();
         t5m.setDisplayName(ChatColor.GOLD+"Boat MLG");
-        t5.setItemMeta(t5m);
-        inv.setItem(40, t5);
+        boat.setItemMeta(t5m);
+        inv.setItem(31, boat);
 
 ////////////////////////////////////////////////////////////////////////
 

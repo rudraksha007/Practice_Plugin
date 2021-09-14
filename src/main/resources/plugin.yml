@@ -1,5 +1,5 @@
 name: Practice
-version: 1.5.5
+version: 1.6.1
 main: me.rudraksha007.Practice
 api-version: 1.13
 commands:
@@ -12,6 +12,6 @@ commands:
   prleave:
     usage: /prleave
     description: command for players to leave practice match
-softdepend:
+depend:
   - PlaceholderAPI
 

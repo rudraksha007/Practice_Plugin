@@ -4,6 +4,7 @@ import me.rudraksha007.Objects.Arena;
 import me.rudraksha007.Objects.HashMaps;
 import me.rudraksha007.Objects.MLGArena;
 import me.rudraksha007.Practice;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -12,6 +13,7 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.util.Vector;
 
 import java.util.Map;
 import java.util.Set;
@@ -92,13 +94,19 @@ public class MLGGameManager {
     }
 
     public void resetMLG(Player player){
+        player.setVelocity(new Vector(0,0,0).multiply(0));
         MLGArena arena = (MLGArena) igp.get(player.getUniqueId());
         player.teleport(arena.getSpawn());
         if (arena.getBlocks()!=null){
             for (Location loc : arena.getBlocks()){player.getWorld().getBlockAt(loc).setType(Material.AIR);}}
         arena.setBlocks(null);
         giveMLGItems(arena);
-        player.setHealth(player.getMaxHealth());
+        Bukkit.getScheduler().runTaskLater(Practice.plugin, new Runnable() {
+            @Override
+            public void run() {
+                player.setHealth(player.getMaxHealth());
+            }
+        }, 5L);
         igp.put(player.getUniqueId(), arena);
     }
 

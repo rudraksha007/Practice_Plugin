@@ -6,10 +6,12 @@ import org.bukkit.entity.Player;
 import java.util.List;
 
 public class Arena {
+
     Player player;
     Location spawn;
     Location end;
     List<Location> blocks;
+
     public Arena(Player player, Location spawn, Location end, List<Location> blocks){
         this.player = player;
         this.spawn = spawn;
@@ -47,5 +49,11 @@ public class Arena {
 
     public void setBlocks(List<Location> blocks) {
         this.blocks = blocks;
+    }
+
+    public Arena getDefault(){
+        this.setPlayer(null);
+        this.setBlocks(null);
+        return this;
     }
 }

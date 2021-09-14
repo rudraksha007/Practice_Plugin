@@ -19,22 +19,21 @@ public class Move implements Listener {
     public void onMove(PlayerMoveEvent event){
         if (!igp.containsKey(event.getPlayer().getUniqueId()))return;
         Player player = event.getPlayer();
+        MLGArena arena = (MLGArena) igp.get(player.getUniqueId());
+        if (player.getLocation().getY()<10){
+            player.damage(10);
+        }
         if (!player.getWorld().getBlockAt(player.getLocation().add(0,-1,0)).getType().equals(Material.GOLD_BLOCK))return;
         Bukkit.getScheduler().runTaskLater(Practice.plugin, new Runnable() {
             @Override
             public void run() {
-                MLGArena arena = (MLGArena) igp.get(player.getUniqueId());
-                if (player.getHealth()<player.getMaxHealth()){
-                    player.sendMessage(form("&c&lYou failed in this try, resetting for you!"));
-                    arena.setFails(arena.getFails()+1);
-                }else {
+                if (!player.getWorld().getBlockAt(player.getLocation().add(0,-1,0)).getType().equals(Material.GOLD_BLOCK))return;
                     player.sendMessage(form("&a&lYou succeeded in this try!! resetting for you!"));
                     int val = (int) ((-0.5* arena.getHeight())+30);
                     arena.setScore(arena.getScore()+val);
                     arena.setWins(arena.getWins()+1);
-                }
-                new MLGGameManager().resetMLG(player);
                 igp.put(player.getUniqueId(), arena);
+                new MLGGameManager().resetMLG(player);
             }
         },1L);
     }

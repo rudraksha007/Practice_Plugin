@@ -21,20 +21,22 @@ public class PlaceHolders extends PlaceholderExpansion {
 
     @Override
     public @NotNull String getVersion() {
-        return "1.5.5";
+        return "1.0";
     }
     @Override
-    public String onRequest(OfflinePlayer player, String string){
-        switch (string){
-            case "practice_wins":
-                return config.getString("player-data."+player.getUniqueId()+".wins");
-            case "practice_fails":
-                return config.getString("player-data."+player.getUniqueId()+".fails");
-            case "practice_score":
-                return config.getString("player-data."+player.getUniqueId()+".total-score");
-            case "practice_games":
-                return config.getString("player-data."+player.getUniqueId()+".total-games");
-        }
+    public String onRequest(OfflinePlayer player, @NotNull String string){
+        try {
+            switch (string){
+                case "wins":
+                    return config.getString("player-data."+player.getUniqueId()+".wins");
+                case "fails":
+                    return config.getString("player-data."+player.getUniqueId()+".fails");
+                case "score":
+                    return config.getString("player-data."+player.getUniqueId()+".total-score");
+                case "games":
+                    return config.getString("player-data."+player.getUniqueId()+".total-games");
+            }
+        }catch (NullPointerException ignored){ }
         return null;
     }
 }

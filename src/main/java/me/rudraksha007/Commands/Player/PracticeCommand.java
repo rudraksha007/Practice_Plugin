@@ -1,6 +1,7 @@
 package me.rudraksha007.Commands.Player;
 
 import me.rudraksha007.Java.MLGGameManager;
+import me.rudraksha007.Objects.GUIs.stats;
 import me.rudraksha007.Objects.MLGArena;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -24,7 +25,8 @@ public class PracticeCommand implements CommandExecutor {
             case "leave":
                 if (!igp.containsKey(player.getUniqueId())){player.sendMessage(form("&c&lYou are not in any game"));return true;}
                 new MLGGameManager().endMLG((MLGArena) igp.get(player.getUniqueId()));break;
-            default: player.sendMessage(form("&c&lInvalid command. Usage: /practice [join|leave]"));break;
+            case "stats": player.openInventory(new stats().create(player));break;
+            default: player.sendMessage(form("&c&lInvalid command. Usage: /practice [join|leave|stats]"));break;
 
         }
         return true;

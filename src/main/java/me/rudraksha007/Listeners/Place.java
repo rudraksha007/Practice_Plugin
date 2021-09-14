@@ -1,12 +1,15 @@
 package me.rudraksha007.Listeners;
 
 import me.rudraksha007.Objects.MLGArena;
+import me.rudraksha007.Practice;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
+import org.bukkit.event.vehicle.VehicleCreateEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,5 +52,15 @@ public class Place implements Listener {
             arena.setBlocks(blocks);
         }
         igp.put(player.getUniqueId(), arena);
+    }
+
+    @EventHandler
+    public void onBoat(VehicleCreateEvent event){
+        Bukkit.getScheduler().runTaskLater(Practice.plugin, new Runnable() {
+            @Override
+            public void run() {
+                event.getVehicle().remove();
+            }
+        }, 20L);
     }
 }

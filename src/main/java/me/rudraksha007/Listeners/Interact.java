@@ -6,9 +6,7 @@ import me.rudraksha007.Objects.Arena;
 import me.rudraksha007.Objects.GUIs.GUIs;
 import me.rudraksha007.Objects.GUIs.MLGOptions;
 import me.rudraksha007.Objects.MLGArena;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -18,24 +16,23 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.logging.Level;
-
 import static me.rudraksha007.Objects.HashMaps.admin;
 import static me.rudraksha007.Objects.HashMaps.igp;
+import static me.rudraksha007.Practice.boat;
+import static me.rudraksha007.Practice.web;
 
 public class Interact implements Listener {
 
     MLGGameManager manager = new MLGGameManager();
-
     @EventHandler
     public void onInvClick(InventoryClickEvent event){
         if (event.getClickedInventory()==null)return;
         if (event.getCurrentItem()==null)return;
         if (!(event.getClickedInventory().getHolder() instanceof GUIs))return;
         if (!(event.getWhoClicked() instanceof Player))return;
+        event.setCancelled(true);
         Player player = (Player) event.getWhoClicked();
         if (!igp.containsKey(player.getUniqueId()))return;
-        event.setCancelled(true);
         if (event.getClickedInventory().getHolder() instanceof MLGOptions){
             MLGArena arena = (MLGArena) igp.get(player.getUniqueId());
             ItemStack stack = event.getCurrentItem();
@@ -57,16 +54,13 @@ public class Interact implements Listener {
                     case 3:manager.createPlatform(arena, 0, arena.getHeight());break;
                 }
             }
-            Material boat = Material.matchMaterial("BOAT");
-            if (boat==null)boat = Material.matchMaterial("OAK_BOAT");
-            Material web = Material.matchMaterial("WEB");
-            if (web==null)web = Material.matchMaterial("COBWEB");
-            else if(stack.getType().equals(Material.WATER_BUCKET)) {arena.setMLGType(Material.WATER_BUCKET);}
+            if(stack.getType().equals(Material.WATER_BUCKET)) {arena.setMLGType(Material.WATER_BUCKET);}
             else if(stack.getType().equals(Material.LADDER)) {arena.setMLGType(Material.LADDER);}
-            else if(stack.getType().equals(boat)) {arena.setMLGType(boat);}
-            else if(stack.getType().equals(web)) {arena.setMLGType(web);}
+            else if(stack.getType().equals(boat.getType())) {arena.setMLGType(boat.getType());}
+            else if(stack.getType().equals(web.getType())) {arena.setMLGType(web.getType());}
             manager.giveMLGItems(arena);
             igp.put(player.getUniqueId(), arena);
+
         }
     }
 
@@ -95,6 +89,7 @@ public class Interact implements Listener {
                 }
                 arena.setEnd(event.getClickedBlock().getLocation());
                 player.sendMessage(ChatColor.GREEN+"Normal Arena End Location Has Been Set!");
+                player.sendMessage(ChatColor.GREEN+""+ChatColor.BOLD+"Please run /pa reload: to reload the plugin and add the new maps!");
                 new ArenaManager().save(arena);
                 admin.remove(player.getUniqueId());
             }
