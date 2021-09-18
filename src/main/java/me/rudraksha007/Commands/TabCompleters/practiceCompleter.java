@@ -25,12 +25,13 @@ public class practiceCompleter implements TabCompleter {
             }
         }
         if (args.length==2){
-            if (args[1].isEmpty()){all.add("MLG");all.add("PARKOUR");return all;}
+            if (args[1].isEmpty()){all.clear();all.add("MLG");all.add("PARKOUR");
+            }
             else {
                 all.add("MLG");all.add("PARKOUR");
                 all.removeIf(a ->!a.contains(args[1]));
-                return all;
             }
+            return all;
         }
         return null;
     }
