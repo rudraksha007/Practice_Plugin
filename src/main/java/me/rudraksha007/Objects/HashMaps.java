@@ -11,6 +11,7 @@ public class HashMaps {
     public static Map<UUID, Arena>igp = new HashMap<>();
     public static Map<UUID, Arena>admin = new HashMap<>();
     public static Set<MLGArena> MLGArenas = new HashSet<>();
-    public static Map<UUID, ItemStack[]> invs = new HashMap<UUID, org.bukkit.inventory.ItemStack[]>();
+    public static Set<ParkourArena> ParkourArenas = new HashSet<>();
+    public static Map<UUID, ItemStack[]> invs = new HashMap<>();
     public static Location Lobby = new ArenaManager().loadLocation("lobby");
 }

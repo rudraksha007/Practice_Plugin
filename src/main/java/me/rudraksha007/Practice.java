@@ -7,10 +7,14 @@ import me.rudraksha007.Commands.TabCompleters.pa;
 import me.rudraksha007.Commands.TabCompleters.practiceCompleter;
 import me.rudraksha007.Java.ArenaManager;
 import me.rudraksha007.Java.MLGGameManager;
+import me.rudraksha007.Java.ParkourManager;
 import me.rudraksha007.Listeners.*;
+import me.rudraksha007.Objects.Arena;
 import me.rudraksha007.Objects.MLGArena;
+import me.rudraksha007.Objects.ParkourArena;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -26,6 +30,9 @@ public final class Practice extends JavaPlugin {
     public static Practice plugin;
     public static ItemStack boat;
     public static ItemStack web;
+    public static ItemStack plate;
+    public static Sound wither_hurt;
+    public static Sound level;
 
     @Override
     public void onEnable() {
@@ -42,7 +49,13 @@ public final class Practice extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        if (!igp.isEmpty()){ for (UUID id: igp.keySet()){ new MLGGameManager().endMLG((MLGArena) igp.get(id)); } }
+        if (!igp.isEmpty()){ for (UUID id: igp.keySet()){
+            Arena a = igp.get(id);
+            if (a instanceof MLGArena) new MLGGameManager().endMLG((MLGArena) igp.get(id));
+            else if (a instanceof ParkourArena) new ParkourManager().Leave(id);
+            }
+        }
+        igp.clear();
         this.saveConfig();
     }
 
@@ -65,7 +78,10 @@ public final class Practice extends JavaPlugin {
     }
 
     public void setupCrossVersion(){
-        try {boat = new ItemStack(Material.matchMaterial("OAK_BOAT")); }catch (NullPointerException e){ boat = new ItemStack(Material.matchMaterial("BOAT")); }
-        try { web =  new ItemStack(Material.matchMaterial("COBWEB")); }catch (NullPointerException e){ web = new ItemStack(Material.matchMaterial("WEB")); }
+        try {boat = new ItemStack(Material.matchMaterial("OAK_BOAT")); }catch (Exception e){ boat = new ItemStack(Material.matchMaterial("BOAT")); }
+        try { web =  new ItemStack(Material.matchMaterial("COBWEB")); }catch (Exception e){ web = new ItemStack(Material.matchMaterial("WEB")); }
+        try { plate = new ItemStack(Material.matchMaterial("HEAVY_WEIGHTED_PRESSURE_PLATE")); }catch (Exception e){ plate = new ItemStack(Material.matchMaterial("GOLD_PLATE")); }
+        try { wither_hurt = Sound.valueOf("ENTITY_WITHER_HURT"); }catch (Exception e){ wither_hurt = Sound.valueOf("WITHER_HURT"); }
+        try { level = Sound.valueOf("ENTITY_PLAYER_LEVELUP"); }catch (Exception e){ wither_hurt = Sound.valueOf("LEVEL_UP"); }
     }
 }

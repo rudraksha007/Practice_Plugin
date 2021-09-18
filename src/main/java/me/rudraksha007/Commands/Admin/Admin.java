@@ -13,9 +13,9 @@ public class Admin implements CommandExecutor {
         Player player = (Player) sender;
         if (!player.hasPermission("practice.admin")){
             player.sendMessage(form("&c&lYou don't have permission to do this!"));return true;}
-        if (args.length != 1){ player.sendMessage(form("&c&lInvalid command. Usage: /pa [addmap|setlobby]"));return true;}
+        if (args.length == 0||args.length>2){ player.sendMessage(form("&c&lInvalid command. Usage: /pa [addmap|setlobby]"));return true;}
         switch (args[0]){
-            case "addmap": new addmap().execute(player); break;
+            case "addmap": new addmap().execute(player, args); break;
             case "setlobby": new setlobby().execute(player);break;
             case "reload":new reload().execute(player);break;
             default: player.sendMessage(form("&c&lInvalid command. Usage: /pa [ addmap | setlobby ]")); return true;

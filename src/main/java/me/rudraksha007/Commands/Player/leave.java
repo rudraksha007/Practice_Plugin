@@ -1,7 +1,10 @@
 package me.rudraksha007.Commands.Player;
 
 import me.rudraksha007.Java.MLGGameManager;
+import me.rudraksha007.Java.ParkourManager;
+import me.rudraksha007.Objects.Arena;
 import me.rudraksha007.Objects.MLGArena;
+import me.rudraksha007.Objects.ParkourArena;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -16,7 +19,9 @@ public class leave implements CommandExecutor {
         if (!(sender instanceof Player)){sender.sendMessage("You can't do this from here!");return true;}
         Player player = (Player) sender;
         if (!igp.containsKey(player.getUniqueId())){player.sendMessage(form("&c&lYou are not in any game"));return true;}
-        new MLGGameManager().endMLG((MLGArena) igp.get(player.getUniqueId()));
+        Arena a = igp.get(player.getUniqueId());
+        if (a instanceof MLGArena) new MLGGameManager().endMLG((MLGArena) igp.get(player.getUniqueId()));
+        else if (a instanceof ParkourArena)new ParkourManager().Leave(player);
         return true;
     }
 

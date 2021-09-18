@@ -46,7 +46,7 @@ public class MLGGameManager {
         MLGArena arena = arena1.getDefault();
         arena.setPlayer(player);
         player.teleport(arena.getSpawn());
-        saveInventory(player);
+        new ArenaManager().saveInventory(player);
         giveMLGItems(arena);
         igp.put(player.getUniqueId(), arena);
         createPlatform(arena, 2, 0);
@@ -56,6 +56,7 @@ public class MLGGameManager {
 
     public void endMLG(MLGArena arena){
         Player player = arena.getPlayer();
+        player.setNoDamageTicks(5);
         player.teleport(HashMaps.Lobby);
         player.sendMessage(form("&f&l<<<---------------------------------------->>>"));
         player.sendMessage(form(   "&a&lThe game you were in, just ended"));
@@ -65,6 +66,7 @@ public class MLGGameManager {
         player.getInventory().clear();
         player.getInventory().setContents(invs.get(player.getUniqueId()));
         player.updateInventory();
+        invs.remove(player.getUniqueId());
 //TODO catch null pointers while getting all stored scores and values!/////////////////////////////////////////////////////////
         try { int score = config.getInt("player-data."+player.getUniqueId()+".total-score")+ arena.getScore();
             config.set("player-data."+player.getUniqueId()+".total-score", score);
@@ -101,19 +103,8 @@ public class MLGGameManager {
             for (Location loc : arena.getBlocks()){player.getWorld().getBlockAt(loc).setType(Material.AIR);}}
         arena.setBlocks(null);
         giveMLGItems(arena);
-        Bukkit.getScheduler().runTaskLater(Practice.plugin, new Runnable() {
-            @Override
-            public void run() {
-                player.setHealth(player.getMaxHealth());
-            }
-        }, 5L);
+        Bukkit.getScheduler().runTaskLater(Practice.plugin, () -> player.setHealth(player.getMaxHealth()), 5L);
         igp.put(player.getUniqueId(), arena);
-    }
-
-    public void saveInventory(Player player){
-        invs.put(player.getUniqueId(), player.getInventory().getContents());
-        player.getInventory().clear();
-
     }
 
     public void giveMLGItems(MLGArena arena) {
