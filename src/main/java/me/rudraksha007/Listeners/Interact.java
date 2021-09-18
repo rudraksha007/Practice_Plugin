@@ -84,6 +84,7 @@ public class Interact implements Listener {
             if (arena.getEnd().equals(loc)){ new ParkourManager().Leave(player);
                 player.playSound(player.getLocation(), level, 1, 1);
                 player.sendMessage(form("&a&lYou completed the parkour course!"));
+                player.sendMessage(form("&a&lYou completed the course in &c&l"+ arena.getTime()+"&a&l seconds"));
             }
             else if (arena.getLastCheckpoint()!=null&&!arena.getLastCheckpoint().equals(loc)){
                 player.sendMessage(form("&a&lCheckpoint Set!"));
