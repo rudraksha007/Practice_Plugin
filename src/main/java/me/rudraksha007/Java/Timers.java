@@ -1,6 +1,7 @@
 package me.rudraksha007.Java;
 
 import dev.jcsoftware.jscoreboards.JPerPlayerScoreboard;
+import me.rudraksha007.GameModes.MLG.MLGGameManager;
 import me.rudraksha007.Objects.Arena;
 import me.rudraksha007.Objects.HashMaps;
 import me.rudraksha007.Objects.MLGArena;

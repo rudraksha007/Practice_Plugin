@@ -1,9 +1,8 @@
-package me.rudraksha007.Java;
+package me.rudraksha007;
 
 import me.rudraksha007.Objects.Arena;
 import me.rudraksha007.Objects.MLGArena;
 import me.rudraksha007.Objects.ParkourArena;
-import me.rudraksha007.Practice;
 import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -95,7 +94,9 @@ public class ArenaManager {
             for (String s: checks){
                 checkpoints.add(loadLocation(s.split(":")));
             }
-            return new ParkourArena(null, location1, location, checkpoints, location1, 0);
+            String[] p = path.split("\\.");
+            Bukkit.getLogger().log(Level.INFO, "Registered the Parkour arena: "+ p[p.length-1]);
+            return new ParkourArena(null, location1, location, checkpoints, location1, 0, p[p.length-1]);
         }
         return null;
     }
@@ -114,7 +115,6 @@ public class ArenaManager {
         try {
             for (String s: config.getConfigurationSection("arenas.parkour").getKeys(false)){
                 ParkourArena arena = (ParkourArena) loadArena(ArenaType.PARKOUR, "arenas.parkour."+s);
-                Bukkit.getLogger().log(Level.INFO, "Registered one of the Parkour arenas!");
                 ParkourArenas.add(arena);
             }
         }catch (NullPointerException e){

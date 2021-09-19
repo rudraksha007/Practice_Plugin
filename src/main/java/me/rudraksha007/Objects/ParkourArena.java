@@ -13,8 +13,9 @@ public class ParkourArena extends Arena{
     Location checkedpoint;
     List<Location> checkpoints;
     float time;
+    String name;
 
-    public ParkourArena(Player player, Location spawn, Location end, List<Location> blocks, Location checkedpoint, float time) {
+    public ParkourArena(Player player, Location spawn, Location end, List<Location> blocks, Location checkedpoint, float time, String name) {
         super(player, spawn, end, blocks);
         this.player = player;
         this.spawn = spawn;
@@ -22,6 +23,7 @@ public class ParkourArena extends Arena{
         this.checkpoints = blocks;
         this.checkedpoint = checkedpoint;
         this.time = time;
+        this.name = name;
     }
 
     public void setCheckpoints(List<Location> points){
@@ -65,5 +67,13 @@ public class ParkourArena extends Arena{
 
    public void setTime(float time){
         this.time = time;
+   }
+
+   public void setName(String name){
+        this.name = name;
+   }
+
+   public String getName(){
+        return this.name;
    }
 }

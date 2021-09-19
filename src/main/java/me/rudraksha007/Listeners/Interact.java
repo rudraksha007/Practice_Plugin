@@ -1,11 +1,10 @@
 package me.rudraksha007.Listeners;
 
-import me.rudraksha007.Java.ArenaManager;
-import me.rudraksha007.Java.MLGGameManager;
-import me.rudraksha007.Java.ParkourManager;
+import me.rudraksha007.ArenaManager;
+import me.rudraksha007.GameModes.MLG.Listeners.MLGInteract;
+import me.rudraksha007.GameModes.Parkour.Listeners.ParkourInteract;
 import me.rudraksha007.Objects.Arena;
 import me.rudraksha007.Objects.GUIs.GUIs;
-import me.rudraksha007.Objects.GUIs.MLGOptions;
 import me.rudraksha007.Objects.MLGArena;
 import me.rudraksha007.Objects.ParkourArena;
 import me.rudraksha007.Practice;
@@ -24,11 +23,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static me.rudraksha007.Objects.HashMaps.*;
-import static me.rudraksha007.Practice.*;
+import static me.rudraksha007.Practice.form;
+import static me.rudraksha007.Practice.wither_hurt;
 
 public class Interact implements Listener {
 
-    MLGGameManager manager = new MLGGameManager();
     @EventHandler
     public void onInvClick(InventoryClickEvent event){
         if (!igp.containsKey(event.getWhoClicked().getUniqueId()))return;
@@ -36,39 +35,8 @@ public class Interact implements Listener {
         if (event.getCurrentItem()==null)return;
         if (!(event.getClickedInventory().getHolder() instanceof GUIs))return;
         if (!(event.getWhoClicked() instanceof Player))return;
-        event.setCancelled(true);
-        Player player = (Player) event.getWhoClicked();
-        if (!(igp.get(player.getUniqueId()) instanceof MLGArena))return;
-        if (event.getClickedInventory().getHolder() instanceof MLGOptions){
-            MLGArena arena = (MLGArena) igp.get(player.getUniqueId());
-            ItemStack stack = event.getCurrentItem();
-            if(stack.getType().equals(Material.SUGAR_CANE)) {
-                player.sendMessage(ChatColor.GREEN+"Changes were made successfully");
-                player.playSound(player.getLocation(), level, 1, 1);
-                event.setCancelled(true);
-                switch (stack.getAmount()) {
-                    case 1: manager.createPlatform(arena,1, 40);break;
-                    case 2: manager.createPlatform(arena,1, 20);break;
-                    case 3: manager.createPlatform(arena,1, 0);break;
-                    case 4: manager.createPlatform(arena,1,-20);break;
-                    case 5: manager.createPlatform(arena,1,-40);break;
-                }
-            }
-            else if(stack.getType().equals(Material.GOLD_BLOCK)) {
-                switch (stack.getAmount()) {
-                    case 1:manager.createPlatform(arena, 2, arena.getHeight());break;
-                    case 2:manager.createPlatform(arena, 1, arena.getHeight());break;
-                    case 3:manager.createPlatform(arena, 0, arena.getHeight());break;
-                }
-            }
-            if(stack.getType().equals(Material.WATER_BUCKET)) {arena.setMLGType(Material.WATER_BUCKET);}
-            else if(stack.getType().equals(Material.LADDER)) {arena.setMLGType(Material.LADDER);}
-            else if(stack.getType().equals(boat.getType())) {arena.setMLGType(boat.getType());}
-            else if(stack.getType().equals(web.getType())) {arena.setMLGType(web.getType());}
-            manager.giveMLGItems(arena);
-            igp.put(player.getUniqueId(), arena);
-
-        }
+        Arena arena = igp.get(event.getWhoClicked().getUniqueId());
+        if (arena instanceof MLGArena)new MLGInteract().onInvClick(event, (MLGArena) arena);
     }
 
     @EventHandler
@@ -78,20 +46,7 @@ public class Interact implements Listener {
             if (igp.isEmpty())return;
             if (!igp.containsKey(player.getUniqueId()))return;
             Arena a = igp.get(player.getUniqueId());
-            if (!(a instanceof ParkourArena))return;
-            ParkourArena arena = (ParkourArena) a;
-            Location loc = event.getClickedBlock().getLocation().add(0,-1,0);
-            if (arena.getEnd().equals(loc)){ new ParkourManager().Leave(player);
-                player.playSound(player.getLocation(), level, 1, 1);
-                player.sendMessage(form("&a&lYou completed the parkour course!"));
-                player.sendMessage(form("&a&lYou completed the course in &c&l"+ arena.getTime()+"&a&l seconds"));
-            }
-            else if (arena.getLastCheckpoint()!=null&&!arena.getLastCheckpoint().equals(loc)){
-                player.sendMessage(form("&a&lCheckpoint Set!"));
-                player.playNote(player.getLocation(), Instrument.PIANO, Note.flat(1, Note.Tone.E));
-                arena.setCheckedpoint(loc);
-                igp.put(player.getUniqueId(), arena);
-            }
+            if (a instanceof ParkourArena) new ParkourInteract().onInteract((ParkourArena) a, event.getClickedBlock().getLocation().add(0,-1,0));
         }
         else {
             if(event.getItem()==null)return;
@@ -141,11 +96,7 @@ public class Interact implements Listener {
                     player.playNote(player.getLocation(), Instrument.PIANO, Note.flat(1, Note.Tone.E));
                 }
             }
-            else if(event.getItem().getType().equals(Material.COMPASS)) {
-                if(!igp.containsKey(player.getUniqueId()))return;
-                player.openInventory(new MLGOptions().getInventory());
-                player.playNote(player.getLocation(), Instrument.PIANO, Note.flat(1, Note.Tone.E));
-            }
+            else if(event.getItem().getType().equals(Material.COMPASS)) new MLGInteract().onInteract(player);
             else if (event.getItem().getType().equals(Material.STICK)){
                 if (admin.isEmpty())return;
                 if (!admin.containsKey(player.getUniqueId()))return;
@@ -176,9 +127,5 @@ public class Interact implements Listener {
                 player.playNote(player.getLocation(), Instrument.PIANO, Note.flat(1, Note.Tone.E));
             }
         }
-    }
-
-    public String form(String msg){
-        return ChatColor.translateAlternateColorCodes('&', msg);
     }
 }

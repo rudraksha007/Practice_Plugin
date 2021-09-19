@@ -1,6 +1,6 @@
 package me.rudraksha007.Objects;
 
-import me.rudraksha007.Java.ArenaManager;
+import me.rudraksha007.ArenaManager;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
 

@@ -1,7 +1,7 @@
 package me.rudraksha007.Commands.Player;
 
-import me.rudraksha007.Java.MLGGameManager;
-import me.rudraksha007.Java.ParkourManager;
+import me.rudraksha007.GameModes.MLG.MLGGameManager;
+import me.rudraksha007.GameModes.Parkour.ParkourManager;
 import me.rudraksha007.Objects.Arena;
 import me.rudraksha007.Objects.MLGArena;
 import me.rudraksha007.Objects.ParkourArena;

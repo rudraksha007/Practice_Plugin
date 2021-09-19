@@ -5,14 +5,14 @@ import me.rudraksha007.Commands.Player.PracticeCommand;
 import me.rudraksha007.Commands.Player.leave;
 import me.rudraksha007.Commands.TabCompleters.pa;
 import me.rudraksha007.Commands.TabCompleters.practiceCompleter;
-import me.rudraksha007.Java.ArenaManager;
-import me.rudraksha007.Java.MLGGameManager;
-import me.rudraksha007.Java.ParkourManager;
+import me.rudraksha007.GameModes.MLG.MLGGameManager;
+import me.rudraksha007.GameModes.Parkour.ParkourManager;
 import me.rudraksha007.Listeners.*;
 import me.rudraksha007.Objects.Arena;
 import me.rudraksha007.Objects.MLGArena;
 import me.rudraksha007.Objects.ParkourArena;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.inventory.ItemStack;
@@ -83,5 +83,9 @@ public final class Practice extends JavaPlugin {
         try { plate = new ItemStack(Material.matchMaterial("HEAVY_WEIGHTED_PRESSURE_PLATE")); }catch (Exception e){ plate = new ItemStack(Material.matchMaterial("GOLD_PLATE")); }
         try { wither_hurt = Sound.valueOf("ENTITY_WITHER_HURT"); }catch (Exception e){ wither_hurt = Sound.valueOf("WITHER_HURT"); }
         try { level = Sound.valueOf("ENTITY_PLAYER_LEVELUP"); }catch (Exception e){ wither_hurt = Sound.valueOf("LEVEL_UP"); }
+    }
+
+    public static String form(String msg){
+        return ChatColor.translateAlternateColorCodes('&', msg);
     }
 }

@@ -1,6 +1,6 @@
 package me.rudraksha007.Commands.Admin;
 
-import me.rudraksha007.Java.ArenaManager;
+import me.rudraksha007.ArenaManager;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 

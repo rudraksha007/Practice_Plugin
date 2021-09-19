@@ -1,5 +1,7 @@
-package me.rudraksha007.Java;
+package me.rudraksha007.GameModes.Parkour;
 
+import me.rudraksha007.ArenaManager;
+import me.rudraksha007.Java.Timers;
 import me.rudraksha007.Objects.ParkourArena;
 import me.rudraksha007.Practice;
 import org.bukkit.Bukkit;
@@ -39,6 +41,14 @@ public class ParkourManager {
         player.getInventory().setBoots(new ItemStack(Material.DIAMOND_BOOTS));
         player.sendMessage(form("&a&lYou joined a Parkour course! Good Luck"));
         new Timers().startParkour(player);
+    }
+
+    public void Join( String s, Player player){
+        for (ParkourArena a: ParkourArenas){
+            if (!a.getName().equalsIgnoreCase(s))continue;
+            Join(a, player);return;
+        }
+        player.sendMessage(form("&c&lNo such arena is available yet!"));
     }
 
     public void Leave(Player player){
